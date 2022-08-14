@@ -64,6 +64,21 @@ const record = async (
   }
 }
 
+const leave = async (
+  interaction: CommandInteraction,
+  recordable: Set<Snowflake>,
+  client: Client,
+  connection?: VoiceConnection
+) => {
+  if (connection) {
+    connection.destroy()
+    recordable.clear()
+    await interaction.reply({ ephemeral: true, content: 'ボイスチャンネルから離脱しました！' })
+  } else {
+    await interaction.reply({ ephemeral: true, content: 'ボットはボイスチャンネルに参加してません。' })
+  }
+}
+
 export const interactionHandlers = new Collection<
   string,
   (
@@ -76,3 +91,4 @@ export const interactionHandlers = new Collection<
 
 interactionHandlers.set('join', join)
 interactionHandlers.set('record', record)
+interactionHandlers.set('leave', leave)

@@ -17,6 +17,10 @@ export const deploy = async (guild: Guild) => {
           required: true
         }
       ]
+    },
+    {
+      name: 'leave',
+      description: 'ボットをボイスチャンネルから離脱させます！'
     }
   ])
 }
