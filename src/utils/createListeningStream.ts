@@ -1,3 +1,5 @@
+import path from 'path'
+import { fileURLToPath } from "url"
 import { createWriteStream } from 'fs'
 import { pipeline } from 'stream';
 import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice";
@@ -16,23 +18,21 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
     }
   })
 
-  const oggStream = new Prism.opus.OggLogicalBitstream({
-    opusHead: new Prism.opus.OpusHead({
-      channelCount: 2,
-      sampleRate: 48000
-    }),
-    pageSizeControl: {
-      maxPackets: 10
-    }
+  const opusDecoder = new Prism.opus.Decoder({
+    frameSize: 960,
+    channels: 2,
+    rate: 48000,
   })
 
-  const fileName = `./recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`
+  const filename = fileURLToPath(import.meta.url)
+  const fileDir = path.dirname(filename)
+  const fileName = path.resolve(fileDir, `../../recordings/${Date.now()}-${getDisplayName(userId, user)}.pcm`)
 
   const out = createWriteStream(fileName)
 
   console.log(`${fileName} に録音を始めました！`)
 
-  pipeline(opusStream, oggStream, out, (err) => {
+  pipeline(opusStream, out, (err) => {
     if (err) {
       console.error(`${fileName} への録音に失敗しました。理由は、${err.message}です。`)
     } else {
