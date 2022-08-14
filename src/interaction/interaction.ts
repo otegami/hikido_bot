@@ -43,6 +43,27 @@ const join = async (
   await interaction.followUp('Ready!')
 }
 
+const record = async (
+  interaction: CommandInteraction,
+  recordable: Set<Snowflake>,
+  client: Client,
+  connection?: VoiceConnection
+) => {
+  if (connection) {
+    const userId = interaction.options.get('speaker')!.value as Snowflake
+    recordable.add(userId)
+
+    const receiver = connection.receiver
+    if (connection.receiver.speaking.users.has(userId)) {
+      createListeningStream(receiver, userId, client.users.cache.get(userId))
+    }
+
+    await interaction.reply({ ephemeral: true, content: '録音中！' })
+  } else {
+    await interaction.reply({ ephemeral: true, content: 'ボットが、ボイスチャンネルに参加してから試してください。' })
+  }
+}
+
 export const interactionHandlers = new Collection<
   string,
   (
@@ -54,3 +75,4 @@ export const interactionHandlers = new Collection<
 >()
 
 interactionHandlers.set('join', join)
+interactionHandlers.set('record', record)
