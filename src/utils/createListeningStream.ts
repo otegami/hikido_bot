@@ -5,6 +5,7 @@ import { pipeline } from 'node:stream';
 import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice";
 import { User } from "discord.js";
 import { opus } from 'prism-media'
+import { uploadAudioFileToS3 } from './s3Controller';
 
 const getDisplayName = (userId: string, user?: User) => {
   return user ? `${user.username}_${user.discriminator}` : userId
@@ -36,10 +37,11 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
 
   console.log(`${fileName} に録音を始めました！`)
 
-  pipeline(opusStream, oggStream, out, (err) => {
+  pipeline(opusStream, oggStream, out, async (err) => {
     if (err) {
       console.error(`${fileName} への録音に失敗しました。理由は、${err.message}です。`)
     } else {
+      await uploadAudioFileToS3(fileName, fileName)
       console.log(`${fileName} への録音が完了しました！`)
     }
   })
