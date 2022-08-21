@@ -54,11 +54,6 @@ const record = async (
     const userId = interaction.options.get('speaker')!.value as Snowflake
     recordable.add(userId)
 
-    const receiver = connection.receiver
-    if (connection.receiver.speaking.users.has(userId)) {
-      createListeningStream(receiver, userId, client.users.cache.get(userId))
-    }
-
     await interaction.reply({ ephemeral: true, content: '録音中！' })
   } else {
     await interaction.reply({ ephemeral: true, content: 'ボットが、ボイスチャンネルに参加してから試してください。' })
