@@ -1,6 +1,7 @@
 import { entersState, joinVoiceChannel, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
 import { Client, CommandInteraction, GuildMember, Snowflake, Collection } from "discord.js";
 import { createListeningStream } from "../utils/createListeningStream";
+import { mergeOggFiles } from "../utils/oggFile";
 
 const join = async (
   interaction: CommandInteraction,
@@ -73,6 +74,8 @@ const leave = async (
   if (connection) {
     connection.destroy()
     recordable.clear()
+
+    await mergeOggFiles()
     await interaction.reply({ ephemeral: true, content: 'ボイスチャンネルから離脱しました！' })
   } else {
     await interaction.reply({ ephemeral: true, content: 'ボットはボイスチャンネルに参加してません。' })
