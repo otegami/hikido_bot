@@ -41,7 +41,7 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
     if (err) {
       console.error(`${fileName} への録音に失敗しました。理由は、${err.message}です。`)
     } else {
-      await uploadAudioFileToS3(fileName, fileName)
+      // await uploadAudioFileToS3(fileName, fileName)
       console.log(`${fileName} への録音が完了しました！`)
     }
   })
