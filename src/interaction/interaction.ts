@@ -10,7 +10,6 @@ const join = async (
   client: Client,
   connection?: VoiceConnection
 ) => {
-  // 詳しく挙動を調べる
   await interaction.deferReply()
   if (!connection) {
     if (interaction.member instanceof GuildMember && interaction.member.voice.channel) {

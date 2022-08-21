@@ -1,12 +1,10 @@
 import path from 'node:path'
-import { fileURLToPath } from "node:url"
 import { createWriteStream } from 'node:fs'
-import { pipeline } from 'node:stream';
-import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice";
-import { User } from "discord.js";
+import { pipeline } from 'node:stream'
+import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice"
+import { User } from "discord.js"
 import { opus } from 'prism-media'
-import { uploadAudioFileToS3 } from './s3Controller';
-import { getFileDir } from './file';
+import { getFileDir } from './file'
 
 const getDisplayName = (userId: string, user?: User) => {
   return user ? `${user.username}_${user.discriminator}` : userId
@@ -41,7 +39,6 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
     if (err) {
       console.error(`${fileName} への録音に失敗しました。理由は、${err.message}です。`)
     } else {
-      // await uploadAudioFileToS3(fileName, fileName)
       console.log(`${fileName} への録音が完了しました！`)
     }
   })
