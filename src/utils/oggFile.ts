@@ -10,7 +10,7 @@ export const mergeOggFiles = async () => {
   const oggFiles = await getOggFiles(recordingDir)
   const opts = { output: './recorded_outputs/result', export: 'ogg' }
 
-  audiosprite(oggFiles, opts, function (err, obj) {
+  audiosprite(oggFiles, opts, (err, obj) => {
     if (err) return console.error(err)
 
     deleteFiles(oggFiles)
@@ -21,5 +21,5 @@ export const mergeOggFiles = async () => {
 const getOggFiles = async (fileDir: string) => {
   const files = await readdir(fileDir)
   const oggFiles = files.filter((file) => path.extname(file) === '.ogg')
-  return oggFiles.map((file) => path.resolve(fileDir, `../../recordings/${file}`))
+  return oggFiles.map((file) => path.resolve(fileDir, file))
 }
