@@ -2,11 +2,10 @@ import audiosprite from 'audiosprite'
 import { unlinkSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { getFileDir } from './file'
 
 export const mergeOggFiles = async () => {
-  const filename = fileURLToPath(import.meta.url)
-  const fileDir = path.dirname(filename)
+  const fileDir = getFileDir(import.meta.url)
   const recordingDir = path.resolve(fileDir, '../../recordings')
 
   const files = await readdir(recordingDir)

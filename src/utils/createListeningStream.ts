@@ -6,6 +6,7 @@ import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice";
 import { User } from "discord.js";
 import { opus } from 'prism-media'
 import { uploadAudioFileToS3 } from './s3Controller';
+import { getFileDir } from './file';
 
 const getDisplayName = (userId: string, user?: User) => {
   return user ? `${user.username}_${user.discriminator}` : userId
@@ -29,8 +30,7 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
     },
   });
 
-  const filename = fileURLToPath(import.meta.url)
-  const fileDir = path.dirname(filename)
+  const fileDir = getFileDir(import.meta.url)
   const fileName = path.resolve(fileDir, `../../recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`)
 
   const out = createWriteStream(fileName)
