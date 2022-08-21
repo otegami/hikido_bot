@@ -10,6 +10,11 @@ const getDisplayName = (userId: string, user?: User) => {
   return user ? `${user.username}_${user.discriminator}` : userId
 }
 
+const createOutputFile = (userId: string, user?: User) => {
+  const fileDir = getFileDir(import.meta.url)
+  return path.resolve(fileDir, `../../recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`)
+}
+
 export const createListeningStream = (receiver: VoiceReceiver, userId: string, user?: User) => {
   const opusStream = receiver.subscribe(userId, {
     end: {
@@ -28,18 +33,14 @@ export const createListeningStream = (receiver: VoiceReceiver, userId: string, u
     },
   });
 
-  const fileDir = getFileDir(import.meta.url)
-  const fileName = path.resolve(fileDir, `../../recordings/${Date.now()}-${getDisplayName(userId, user)}.ogg`)
+  const outputFile = createOutputFile(userId, user)
+  const out = createWriteStream(outputFile)
 
-  const out = createWriteStream(fileName)
-
-  console.log(`${fileName} に録音を始めました！`)
+  console.log(`${outputFile} に録音を始めました！`)
 
   pipeline(opusStream, oggStream, out, async (err) => {
-    if (err) {
-      console.error(`${fileName} への録音に失敗しました。理由は、${err.message}です。`)
-    } else {
-      console.log(`${fileName} への録音が完了しました！`)
-    }
+    if (err) return console.error(`${outputFile} への録音に失敗しました。理由は、${err.message}です。`)
+
+    console.log(`${outputFile} への録音が完了しました！`)
   })
 }

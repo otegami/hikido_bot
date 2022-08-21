@@ -1,6 +1,6 @@
 import { entersState, joinVoiceChannel, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice";
 import { Client, CommandInteraction, GuildMember, Snowflake, Collection } from "discord.js";
-import { createListeningStream } from "../utils/createListeningStream";
+import { createListeningStream } from "../utils/listeningStream";
 import { mergeOggFiles } from "../utils/oggFile";
 import { uploadRecordedOggFile } from "../utils/s3Controller";
 
