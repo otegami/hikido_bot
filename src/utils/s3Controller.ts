@@ -1,6 +1,8 @@
 import fs from "node:fs"
 import * as Dotenv from 'dotenv'
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 
 Dotenv.config()
 const bucketName = process.env.S3_BUCKET
@@ -22,8 +24,14 @@ export const uploadAudioFileToS3 = async (fileKey: string, fileName: string) => 
   return await s3Client.send(new PutObjectCommand(params))
 }
 
-try {
-  await uploadAudioFileToS3('test.ogg', '/Users/otegami/Coding/typescript/hikido_bot/recordings/1660569245681-Otegami_7590.ogg')
-} catch (error) {
-  console.error(error)
+export const uploadRecordedOggFile = async () => {
+  const filename = fileURLToPath(import.meta.url)
+  const fileDir = path.dirname(filename)
+  const recordedFile = path.resolve(fileDir, '../../recorded_outputs/result.ogg')
+
+  try {
+    await uploadAudioFileToS3(`${Date.now()}.ogg`, recordedFile)
+  } catch (error) {
+    console.error(error)
+  }
 }

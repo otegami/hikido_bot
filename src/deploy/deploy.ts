@@ -21,6 +21,10 @@ export const deploy = async (guild: Guild) => {
     {
       name: 'leave',
       description: 'ボットをボイスチャンネルから離脱させます！'
+    },
+    {
+      name: 'upload',
+      description: '録音したファイルを S3 にアップロードします。'
     }
   ])
 }

@@ -2,6 +2,7 @@ import { entersState, joinVoiceChannel, VoiceConnection, VoiceConnectionStatus }
 import { Client, CommandInteraction, GuildMember, Snowflake, Collection } from "discord.js";
 import { createListeningStream } from "../utils/createListeningStream";
 import { mergeOggFiles } from "../utils/oggFile";
+import { uploadRecordedOggFile } from "../utils/s3Controller";
 
 const join = async (
   interaction: CommandInteraction,
@@ -82,6 +83,16 @@ const leave = async (
   }
 }
 
+const upload = async (
+  interaction: CommandInteraction,
+  recordable: Set<Snowflake>,
+  client: Client,
+  connection?: VoiceConnection
+) => {
+  await uploadRecordedOggFile()
+  await interaction.reply({ ephemeral: true, content: '録音ファイルをアップロードしました！' })
+}
+
 export const interactionHandlers = new Collection<
   string,
   (
@@ -95,3 +106,4 @@ export const interactionHandlers = new Collection<
 interactionHandlers.set('join', join)
 interactionHandlers.set('record', record)
 interactionHandlers.set('leave', leave)
+interactionHandlers.set('upload', leave)
