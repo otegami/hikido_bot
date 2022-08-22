@@ -41,7 +41,9 @@ client.on('interactionCreate', async (interaction: Interaction) => {
   try {
     if (handler) {
       await handler(interaction, recordable, client, getVoiceConnection(interaction.guildId))
-    } else await interaction.reply('存在しないコマンドです！')
+    } else {
+      await interaction.reply('存在しないコマンドです！')
+    }
   } catch (error) {
     console.error(error)
   }
