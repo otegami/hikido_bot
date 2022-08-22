@@ -1,5 +1,7 @@
-import { entersState, joinVoiceChannel, VoiceConnection, VoiceConnectionStatus } from "@discordjs/voice"
-import { Client, CommandInteraction, GuildMember, Snowflake } from "discord.js"
+import type { VoiceConnection } from "@discordjs/voice"
+import { entersState, joinVoiceChannel, VoiceConnectionStatus } from "@discordjs/voice"
+import type { Client, CommandInteraction, Snowflake } from "discord.js"
+import { GuildMember } from "discord.js"
 import { createListeningStream } from "../utils/listeningStream"
 
 export const join = async (

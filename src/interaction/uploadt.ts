@@ -1,5 +1,5 @@
-import { VoiceConnection } from "@discordjs/voice"
-import { Client, CommandInteraction, Snowflake } from "discord.js"
+import type { VoiceConnection } from "@discordjs/voice"
+import type { Client, CommandInteraction, Snowflake } from "discord.js"
 import { uploadRecordedOggFile } from "../utils/s3Controller"
 
 export const upload = async (

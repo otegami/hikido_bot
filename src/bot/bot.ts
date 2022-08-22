@@ -1,8 +1,9 @@
 import * as Dotenv from 'dotenv'
-import { Client, GatewayIntentBits, Interaction } from "discord.js";
-import { deploy } from "../deploy/deploy";
-import { getVoiceConnection } from '@discordjs/voice';
-import { interactionHandlers } from '../interaction/interaction';
+import type { Interaction } from "discord.js"
+import { Client, GatewayIntentBits } from "discord.js"
+import { deploy } from "../deploy/deploy"
+import { getVoiceConnection } from '@discordjs/voice'
+import { interactionHandlers } from '../interaction'
 
 Dotenv.config()
 const { DISCORD_TOKEN } = process.env

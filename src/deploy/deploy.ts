@@ -1,4 +1,5 @@
-import { ApplicationCommandOptionType, Guild } from "discord.js";
+import type { Guild } from "discord.js"
+import { ApplicationCommandOptionType } from "discord.js"
 
 export const deploy = async (guild: Guild) => {
   await guild.commands.set([

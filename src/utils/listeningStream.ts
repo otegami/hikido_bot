@@ -1,7 +1,8 @@
 import path from 'node:path'
 import { createWriteStream } from 'node:fs'
 import { pipeline } from 'node:stream'
-import { EndBehaviorType, VoiceReceiver } from "@discordjs/voice"
+import type { VoiceReceiver } from "@discordjs/voice"
+import { EndBehaviorType } from "@discordjs/voice"
 import { User } from "discord.js"
 import { opus } from 'prism-media'
 import { getFileDir } from './file'
